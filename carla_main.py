@@ -126,10 +126,10 @@ def main():
         carlaBridge.run()
 
     finally:
-            print('destroying actors')
-            for actor in actor_list:
-                actor.destroy()
-            print('done.')
+        print('destroying actors')
+        for actor in actor_list:
+            actor.destroy()
+        print('done.')
 
 
 if __name__ == '__main__':
