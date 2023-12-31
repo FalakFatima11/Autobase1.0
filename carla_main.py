@@ -26,17 +26,19 @@ class CarlaBridge:
             print('Initialising Carla Setup')
             client = carla.Client('localhost', 2000)
             client.set_timeout(2.0)
+            self.tm = client.get_trafficmanager()
+            self.tm_port = self.tm.get_port()
+            self.tm.global_percentage_speed_difference(80)
             world = client.get_world()
             settings = world.get_settings()
             settings.synchronous_mode = True
+            self.tm.set_synchronous_mode(True)
             settings.fixed_delta_seconds = 1.0/FPS  # FPS = 1/0.05 = 20
             world.apply_settings(settings)
             world.tick()
             self.world = world
             time.sleep(1)
-            self.tm = client.get_trafficmanager()
-            self.tm_port = self.tm.get_port()
-            self.tm.global_percentage_speed_difference(80)
+            
         except :
             sys.exit("Failed to Intialise the world")    
 
@@ -130,6 +132,8 @@ def main():
         for actor in actor_list:
             actor.destroy()
         print('done.')
+        CarlaBridge.settings.synchronous_mode = False
+        CarlaBridge.tm.set_synchronous_mode(False)
 
 
 if __name__ == '__main__':
