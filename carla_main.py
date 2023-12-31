@@ -1,7 +1,7 @@
 import glob
 import os
 import sys
-import carla_config
+from carla_config import *
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
         sys.version_info.major,
@@ -34,6 +34,9 @@ class CarlaBridge:
             world.tick()
             self.world = world
             time.sleep(1)
+            self.tm = client.get_trafficmanager()
+            self.tm_port = self.tm.get_port()
+            self.tm.global_percentage_speed_difference(80)
         except :
             sys.exit("Failed to Intialise the world")    
 
@@ -45,7 +48,7 @@ class CarlaBridge:
             spawn_point = random.choice(world.get_map().get_spawn_points())
             vehicle = world.spawn_actor(carbp, spawn_point)
             # vehicle.apply_control(carla.VehicleControl(throttle=1.0, steer=0.0))
-            vehicle.set_autopilot(True)  # if you just wanted some NPCs to drive.
+            vehicle.set_autopilot(True, self.tm_port)  # if you just wanted some NPCs to drive.
             self.vehicle = vehicle
 
             actor_list.append(vehicle)
@@ -69,7 +72,7 @@ class CarlaBridge:
             lidar_location = carla.Location(0, 0, 1.75)
             lidar_rotation = carla.Rotation(0, 0, 0)
             lidar_transform = carla.Transform(lidar_location, lidar_rotation)
-            lidar_sen = world.spawn_actor(lidar_bp, lidar_transform, attach_to=ego)
+            lidar_sen = world.spawn_actor(lidar_bp, lidar_transform, attach_to=vehicle)
             lidar_sen.listen(
                 lambda point_cloud: self.process_point_cloud(point_cloud))
             self.lidar_sen = lidar_sen
