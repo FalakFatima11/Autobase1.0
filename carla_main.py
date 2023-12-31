@@ -2,6 +2,13 @@ import glob
 import os
 import sys
 from carla_config import *
+import carla
+import random
+import time
+import numpy as np
+import rosbridge
+
+
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
         sys.version_info.major,
@@ -10,14 +17,10 @@ try:
 except IndexError:
     pass
 
-import carla
-import random
-import time
-import numpy as np
-import rosbridge
 
 actor_list = []
 roscom = rosbridge.RosCom()
+
 
 class CarlaBridge:
     def __init__(self):
@@ -39,7 +42,7 @@ class CarlaBridge:
             self.world = world
             time.sleep(1)
             
-        except :
+        except:
             sys.exit("Failed to Intialise the world")    
 
         #Initializing the car
@@ -49,39 +52,46 @@ class CarlaBridge:
             print(carbp)
             spawn_point = random.choice(world.get_map().get_spawn_points())
             vehicle = world.spawn_actor(carbp, spawn_point)
-            # vehicle.apply_control(carla.VehicleControl(throttle=1.0, steer=0.0))
-            vehicle.set_autopilot(True, self.tm_port)  # if you just wanted some NPCs to drive.
+            vehicle.apply_control(carla.VehicleControl(throttle=1.0, steer=0.0))
+            
+            # if you just wanted some NPCs to drive.
+            vehicle.set_autopilot(True, self.tm_port)  
             self.vehicle = vehicle
 
             actor_list.append(vehicle)
            
         
-        except: 
-            print("Failed to Init Car")
+        except Exception as e:
+            print(e) 
+            print("Failed to initialise car")
 
         
         try: 
-             # VLP-16 LiDAR
+            # VLP-16 LiDAR
             lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast_semantic')
             lidar_bp.set_attribute('channels', str(16))
+            
             # Set the fps of simulator same as this
             lidar_bp.set_attribute('rotation_frequency', str(FPS))
             lidar_bp.set_attribute('range', str(LIDAR_RANGE))
             lidar_bp.set_attribute('lower_fov', str(-15))
             lidar_bp.set_attribute('upper_fov', str(15))
             lidar_bp.set_attribute('points_per_second', str(300000))
+            
             # lidar_bp.set_attribute('dropoff_general_rate',str(0.0))
             lidar_location = carla.Location(0, 0, 1.75)
             lidar_rotation = carla.Rotation(0, 0, 0)
             lidar_transform = carla.Transform(lidar_location, lidar_rotation)
             lidar_sen = world.spawn_actor(lidar_bp, lidar_transform, attach_to=vehicle)
-            lidar_sen.listen(
-                lambda point_cloud: self.process_point_cloud(point_cloud))
+            lidar_sen.listen(lambda point_cloud: self.process_point_cloud(point_cloud))
+            
             self.lidar_sen = lidar_sen
+            actor_list.append(lidar_sen)
             print("finished Carla setup")
         except:
             print("Failed to Initialise the Lidar")
             pass
+
 
     def setup_ticks(self):
         for i in range(20):
@@ -112,14 +122,11 @@ class CarlaBridge:
 
         roscom.publish_points(pcd_xyz)
     
+
     def run(self):
         while not rospy.is_shutdown():
-            
             self.world.tick()
-
             time.sleep(0.02)
-
-
 
 
 def main():
@@ -137,6 +144,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()    
-    
-
+        main()    
