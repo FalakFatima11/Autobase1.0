@@ -7,6 +7,7 @@ import random
 import time
 import numpy as np
 import rosbridge
+import rospy
 
 
 try:
@@ -68,8 +69,8 @@ class CarlaBridge:
         try:
             dummy_bp = world.get_blueprint_library().find('sensor.camera.rgb')
             dummy_transform = carla.Transform(carla.Location(
-            x=-1, z=31), carla.Rotation(pitch=0.0))
-            dummy = world.spawn_actor(dummy_bp, dummy_transform, attach_to=ego,
+            x=-5.5, z=2.5), carla.Rotation(pitch=8.0))
+            dummy = world.spawn_actor(dummy_bp, dummy_transform, attach_to=vehicle,
                                   attachment_type=carla.AttachmentType.SpringArm)
             dummy.listen(lambda image: self.dummy_function(image))
             spectator = world.get_spectator()
@@ -77,7 +78,8 @@ class CarlaBridge:
             self.dummy = dummy
             self.spectator = spectator
 
-        except:
+        except Exception as e:
+            print(e)
             print("Init Dummy Failed")
         try: 
             # VLP-16 LiDAR
@@ -139,6 +141,7 @@ class CarlaBridge:
     def run(self):
         while not rospy.is_shutdown():
             self.world.tick()
+            self.spectator.set_transform(self.dummy.get_transform())
             time.sleep(0.02)
 
 
