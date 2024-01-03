@@ -51,7 +51,7 @@ class CarlaBridge:
             blueprint_library = world.get_blueprint_library()
             carbp = blueprint_library.find('vehicle.tesla.model3')
             print(carbp)
-            spawn_point = random.choice(world.get_map().get_spawn_points())
+            spawn_point = carla.Transform(carla.Location(x=50.0, y=210.0, z= 1.0), carla.Rotation(0,0,0))
             vehicle = world.spawn_actor(carbp, spawn_point)
             vehicle.apply_control(carla.VehicleControl(throttle=1.0, steer=0.0))
             
