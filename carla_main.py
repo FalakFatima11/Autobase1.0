@@ -65,7 +65,20 @@ class CarlaBridge:
             print(e) 
             print("Failed to initialise car")
 
-        
+        try:
+            dummy_bp = world.get_blueprint_library().find('sensor.camera.rgb')
+            dummy_transform = carla.Transform(carla.Location(
+            x=-1, z=31), carla.Rotation(pitch=0.0))
+            dummy = world.spawn_actor(dummy_bp, dummy_transform, attach_to=ego,
+                                  attachment_type=carla.AttachmentType.SpringArm)
+            dummy.listen(lambda image: self.dummy_function(image))
+            spectator = world.get_spectator()
+            spectator.set_transform(dummy.get_transform())
+            self.dummy = dummy
+            self.spectator = spectator
+
+        except:
+            print("Init Dummy Failed")
         try: 
             # VLP-16 LiDAR
             lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast_semantic')
