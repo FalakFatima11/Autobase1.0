@@ -29,7 +29,7 @@ Add the following line to your **bashrc** file:
 ## Relocalize Vehicle Using LEGO-LOAM-BOR:
  After generating the map, in a new terminal, source the LEGO-LOAM-BOR workspace, create the map, and relocalize the vehicle in the mapped environment
 `source ~/catkin_ws_loam_bor/devel/setup.bash`
-'roslaunch lego_loam_bor createMap.launch lidar_topic:=/velodyne_point'
+`roslaunch lego_loam_bor createMap.launch lidar_topic:=/velodyne_point`
 ### The Map will be saved in temp folder when we shut down the algorithm and carla_main.py
 ## To Relocalise do:
  `Roslaunch lego_loam_bor localization.launch lidar_topic:=/velodyne_points`
