@@ -119,7 +119,10 @@ class CarlaBridge:
             # self.ego.apply_control(carla.VehicleControl(
             #     throttle=0, steer=0, brake=0))
    
+    def dummy(self, image):
+        pass
 
+    
     def process_point_cloud(self, point_cloud_carla):
         pcd = np.copy(np.frombuffer(point_cloud_carla.raw_data,
                                     dtype=np.dtype("f4, f4, f4, f4, u4, u4")))
