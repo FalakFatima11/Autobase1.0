@@ -1,6 +1,6 @@
 # Autobase 1.0 - Autonomous Driving Platform
 
-Autobase 1.0 is an autonomous driving platform developed from the ground up by students at AUV-ZHCET Club. This project aims to create a robust and versatile system for autonomous vehicles, providing a foundation for learning, experimentation, and development in the field of autonomous driving.
+Autobase 1.0 is an autonomous driving platform developed from the ground up by students at AUV-ZHCET Club. This project aims to create a robust and versatile system for autonomous vehicles, providing a foundation for learning, experimentation, and development in the field of autonomous driving. :teacher:
 
 ## Features
 
@@ -13,13 +13,14 @@ Autobase 1.0 is an autonomous driving platform developed from the ground up by s
 - **Learning Resources:** The platform comes with extensive learning resources, documentation, and tutorials to facilitate the understanding and development of autonomous driving systems.
 
 ## Getting Started
+:construction:
 
 ### Prerequisites
 
 - [List of prerequisites and dependencies]
 
 ### Installation
-
+:construction:
 1. [Installation steps]
 
 ### Usage
