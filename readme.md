@@ -13,13 +13,14 @@ Autobase 1.0 is an autonomous driving platform developed from the ground up by s
 - **Learning Resources:** The platform comes with extensive learning resources, documentation, and tutorials to facilitate the understanding and development of autonomous driving systems.
 
 ## Getting Started
+:construction:
 
 ### Prerequisites
 
 - [List of prerequisites and dependencies]
 
 ### Installation
-
+:construction:
 1. [Installation steps]
 
 ### Usage
