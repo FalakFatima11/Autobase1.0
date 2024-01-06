@@ -16,7 +16,7 @@ Autobase 1.0 is an autonomous driving platform developed from the ground up by s
 :construction:
 
 ### Prerequisites
-
+:construction:
 - [List of prerequisites and dependencies]
 
 ### Installation
@@ -24,15 +24,16 @@ Autobase 1.0 is an autonomous driving platform developed from the ground up by s
 1. [Installation steps]
 
 ### Usage
+:construction:
 
 1. [Usage instructions]
 
 ## Contributing
-
+:construction:
 We welcome contributions from the community. If you'd like to contribute to Autobase 1.0, please follow our [Contribution Guidelines].
 
 ## License
-
+:construction:
 This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
