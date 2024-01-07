@@ -2,6 +2,20 @@
 
 Autobase 1.0 is an autonomous driving platform developed from the ground up by students at AUV-ZHCET Club. This project aims to create a robust and versatile system for autonomous vehicles, providing a foundation for learning, experimentation, and development in the field of autonomous driving. :teacher:
 
+## Structure
+The Project is divided into various components each being developed sequentially. Some of the modules are listed below:
+
+1. **Carla Simulation**
+   * This module contains the scripts for setting up a virtual enviroment to test the stack. All of our further modules will be tested on this test bench. To learn more about setting up carla head on to Carla.md in the Docs folder. 
+
+2. **Controller** 
+
+3. **Global Planner**
+
+4. **Local Planner**
+
+5. **Perception**
+
 ## Features
 
 - **Modular Architecture:** Autobase 1.0 is designed with a modular architecture, allowing for easy integration and customization of various components.
@@ -42,7 +56,7 @@ We would like to express our gratitude to [mention any contributors, libraries, 
 
 ## Contact
 
-For inquiries about Autobase 1.0, please contact the AUV-ZHCET Club at [contact@email.com].
+For inquiries about Autobase 1.0, please contact the AUV-ZHCET Club at [auvzhcet@zhcet.ac.in].
 
 ## About AUV-ZHCET Club
 
