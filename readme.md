@@ -44,7 +44,12 @@ The Project is divided into various components each being developed sequentially
 
 ## Contributing
 :construction:
-We welcome contributions from the community. If you'd like to contribute to Autobase 1.0, please follow our [Contribution Guidelines].
+We welcome contributions from the community. If you'd like to contribute to Autobase 1.0, please follow our Contribution Guidelines.
+
+1. First Step iis to frok the repository to your local github.
+2. Clone the repository in your local system.
+3. Make changes and commit with proper message to your github.
+4. Open pull request and add a description about your changes.
 
 ## License
 :construction:
