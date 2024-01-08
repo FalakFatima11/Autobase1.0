@@ -30,7 +30,7 @@ The Project is divided into various components each being developed sequentially
 :construction:
 
 ### Prerequisites
-:construction:
+:construction: 
 - [List of prerequisites and dependencies]
 
 ### Installation
