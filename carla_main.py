@@ -8,6 +8,7 @@ import time
 import numpy as np
 import rosbridge
 import rospy
+from Communication.Messages import Control
 
 
 try:
@@ -139,10 +140,37 @@ class CarlaBridge:
         pcd_intensity = pcd[:, 4].reshape(-1, 1)
 
         roscom.publish_points(pcd_xyz)
-    
+
+    def publish_state(self):
+        vel_ego = self.ego.get_velocity()
+        speed = np.linalg.norm(np.array([vel_ego.x, vel_ego.y, vel_ego.z]))
+        roscom.publish_state(int(speed * 3.6))
+
+
+    def control_car(self):
+        throttle = roscom.ego_th
+        throttle = throttle/100  # LL_controller had th and br in (0,100)
+
+        steer = roscom.ego_st
+        steer_val = min(abs(steer), 70)
+        steer_dir = 1 if steer < 0 else -1
+        steer = (steer_val/70) * steer_dir
+
+        print('############')
+        print('Steer: ', steer)
+
+        brake = roscom.ego_br
+        brake = brake/100
+
+        self.ego.apply_control(carla.VehicleControl(
+                throttle=throttle, steer=steer, brake=brake))
+        
 
     def run(self):
         while not rospy.is_shutdown():
+            self.control_car()
+            self.publish_state()
+
             self.world.tick()
             self.spectator.set_transform(self.dummy.get_transform())
             time.sleep(0.02)

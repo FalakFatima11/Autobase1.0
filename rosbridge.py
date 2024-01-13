@@ -2,6 +2,7 @@ import rospy
 import std_msgs
 import sensor_msgs
 from sensor_msgs.msg import PointCloud2
+from Messages import Control, State
 import numpy as np
 
 rospy.init_node('X')
