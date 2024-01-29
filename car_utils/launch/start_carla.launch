@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Starting The Simulation Node -->
+    <include file="$(find carla_autobase)/launch/carla_autobase.launch" />
+
+    <!-- Starting the LL-Controller -->
+    <include file="$(find ll_controller)/launch/ll_controller.launch">
+        <arg name="kp_th" default="25.0" />
+        <arg name="ki_th" default="0" />
+        <arg name="kd_th" default="0" />
+
+        <arg name="kp_br" default="-20.0" />
+        <arg name="ki_br" default="2.0" />
+        <arg name="kd_br" default="1.0" />
+
+        <arg name="throttle_limit" default="100" />
+        <arg name="brake_limit" default="88" />
+    </include>
+
+    <!-- Starting the Lego-LOAM MapCreation -->
+    <include file="$(find lego_loam_bor)/launch/createMap.launch">
+
+    <!-- Starting the Lego-LOAM Localization -->
+    <!--<include file="$(find lego_loam_bor)/launch/localization.launch"/>-->
+        <!-- <arg name="map_path" value="/car-data/Localization/maps/carla/" /> -->
+    </include>
+
+    <!-- Start the Local Planning node -->
+    <node
+        name="communication"
+        pkg="communication"
+        type="testscript.py"
+        launch-prefix="python3"
+    />
+
+    <!-- Start the Path Tracking node -->
+    <include file="$(find stanley_controller)/launch/stanley.launch">
+        <arg name="k" value="0.25" />
+        <arg name="dt" value="0.1" />
+        <arg name="L" value="3" />
+        <arg name="max_steer" value="30" />
+    </include>
+
+    <!-- Starting Rviz -->
+   <!-- Starting Rviz -->
+<node pkg="rviz" type="rviz" name="$(anon rviz)" args="-d $(find car_utils)/rviz/autobase1.3.rviz" />
+
+</launch>
+
+
