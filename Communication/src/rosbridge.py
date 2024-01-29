@@ -2,12 +2,14 @@ import rospy
 import std_msgs
 import sensor_msgs
 from sensor_msgs.msg import PointCloud2
-from Communication.Messages import Control, State
+
 import numpy as np
 
 rospy.init_node('X')
 
-
+import sys
+sys.path.append("communication/msg")
+from communication.msg import CarControls,CarState
 
 class RosCom:
     def __init__(self) -> None:
@@ -20,16 +22,14 @@ class RosCom:
         control_command.angular.z = steer
         control_command.linear.x = self.target_speed
         '''
-
         self.ll_cmd_subscriber = rospy.Subscriber("ll_cmd", CarControls, self.ll_cmd_callback)
         self.ll_state_publisher = rospy.Publisher("ll_state", CarState, queue_size=1)
-
         self.ego_th = 0
         self.ego_br = 0
         self.ego_st = 0
 
-        self.ll_state = State()
-        #self.ll_state.gear = "temp"
+        self.ll_state = CarState()
+        self.ll_state.gear = "temp"
         self.ll_state.driving_mode = "auto"
         self.ll_state.throttle = self.ego_th
         self.ll_state.angle = self.ego_st
@@ -43,17 +43,12 @@ class RosCom:
         self.ll_state.brake = self.ego_br
         self.ll_state_publisher.publish(self.ll_state)
     
+
     def ll_cmd_callback(self, ll_cmd):
         self.ego_th = ll_cmd.throttle
         self.ego_br = ll_cmd.brake
         self.ego_st = ll_cmd.angle
-
-    
-
-    
-
         
-
     def pcd_2_point_cloud(self, points, parent_frame, frametime):
         assert points.shape[1] == 4, 'PCD should be in XYZI format!'
         ros_dtype = sensor_msgs.msg.PointField.FLOAT32

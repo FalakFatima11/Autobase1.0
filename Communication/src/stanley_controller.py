@@ -10,12 +10,11 @@ import cubic_spline_planner
 
 from nav_msgs.msg import Path, Odometry
 from geometry_msgs.msg import Twist
-from lli_msgs.msg import CarState
-
 from tf.transformations import euler_from_quaternion
 import tf
-
 from collections import deque
+
+from communication.msg import CarState
 
 class State():
     """
@@ -42,7 +41,7 @@ class Stanley:
         self.L = L  # [m] Wheel base of vehicle
         self.max_steer = np.radians(max_steer)  # [rad] max steering angle
 
-        self.target_speed = 7 # km/h
+        self.target_speed = 10 # km/h
         self.target_speed_history = deque(maxlen=10)
 
         self.waypoints_list = []
@@ -142,7 +141,7 @@ class Stanley:
         # print("ll_state received")
         if self.state != None:
             velocity = ll_state.velocity # km/h
-            self.state.v = velocity / 3.6 # m/s
+            self.state.v = velocity / 4.6 # m/s
 
     def odometry_callback(self, data):
         # print("odometry received")

@@ -1,0 +1,16 @@
+<launch>
+
+    <!-- These are the settings for mathcar -->
+    <arg name="k" default="0.25" />
+    <arg name="dt" default="0.1" />
+    <arg name="L" default="2.9" />
+    <arg name="max_steer" default="25" />
+    <node name="stanley_controller" pkg="stanley_controller" type="stanley_controller.py"
+        output="screen">
+        <param name="k" value="$(arg k)" />
+        <param name='dt' value="$(arg dt)" />
+        <param name='L' value="$(arg L)" />
+        <param name='max_steer' value="$(arg max_steer)" />
+    </node>
+
+</launch>

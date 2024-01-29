@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import glob
 import os
 import sys
@@ -8,10 +9,10 @@ import time
 import numpy as np
 import rosbridge
 import rospy
-from Communication.Messages import Control
-
+from communication.msg import CarControls
 
 try:
+    sys.path.append("communication/msg")
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
         sys.version_info.major,
         sys.version_info.minor,
@@ -19,7 +20,7 @@ try:
 except IndexError:
     pass
 
-
+# from msg import CarControls
 actor_list = []
 roscom = rosbridge.RosCom()
 
@@ -52,12 +53,12 @@ class CarlaBridge:
             blueprint_library = world.get_blueprint_library()
             carbp = blueprint_library.find('vehicle.tesla.model3')
             print(carbp)
-            spawn_point = carla.Transform(carla.Location(x=50.0, y=210.0, z= 1.0), carla.Rotation(0,0,0))
+            spawn_point = carla.Transform(carla.Location(x=50, y=210, z= 1.0), carla.Rotation(0,0,0))
             ego = world.spawn_actor(carbp, spawn_point)
             ego.apply_control(carla.VehicleControl(throttle=1.0, steer=0.0))
             
             # if you just wanted some NPCs to drive.
-            ego.set_autopilot(True, self.tm_port)  
+            #vehicle.set_autopilot(True, self.tm_port)  
             self.ego = ego
 
             actor_list.append(ego)
@@ -78,6 +79,10 @@ class CarlaBridge:
             spectator.set_transform(dummy.get_transform())
             self.dummy = dummy
             self.spectator = spectator
+            coordinate_str = "(x,y,z) = ({},{},{})".format(dummy_bp.location.x, dummy_bp.location.y,dummy_bp.location.z)
+
+            print (coordinate_str)
+		    
 
         except Exception as e:
             print(e)
@@ -120,7 +125,7 @@ class CarlaBridge:
             # self.ego.apply_control(carla.VehicleControl(
             #     throttle=0, steer=0, brake=0))
    
-    def dummy(self, image):
+    def dummy_function(self, image):
         pass
 
     
