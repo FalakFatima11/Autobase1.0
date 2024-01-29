@@ -8,7 +8,8 @@ The Project is divided into various components each being developed sequentially
 1. **Carla Simulation**
    * This module contains the scripts for setting up a virtual enviroment to test the stack. All of our further modules will be tested on this test bench. To learn more about setting up carla head on to Carla.md in the Docs folder. 
 
-2. **Controller** 
+2. **Controller**  
+    * It contains control algorithm stanley and Pid for lateral and longitudinal direction respectively.
 
 3. **Global Planner**
 
