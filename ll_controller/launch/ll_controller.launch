@@ -1,0 +1,28 @@
+<launch>
+
+  <!-- These are the settings for mathcar -->
+  <arg name="kp_th" default="25.0"/>
+  <arg name="ki_th" default="0" />
+  <arg name="kd_th" default="0" />
+
+  <arg name="kp_br" default="-20.0" />
+  <arg name="ki_br" default="2.0" />
+  <arg name="kd_br" default="1.0" />
+
+  <arg name="throttle_limit" default="100" />
+  <arg name="brake_limit" default="88" />
+
+  <node name="ll_controller" pkg="ll_controller" type="run_ll_controller.py" output="screen">
+    <param name="kp_th" value="$(arg kp_th)" />
+    <param name="ki_th" value="$(arg ki_th)" />
+    <param name="kd_th" value="$(arg kd_th)" />
+
+    <param name="kp_br" value="$(arg kp_br)" />
+    <param name="ki_br" value="$(arg ki_br)" />
+    <param name="kd_br" value="$(arg kd_br)" />
+
+    <param name="throttle_limit" value="$(arg throttle_limit)" />
+    <param name="brake_limit" value="$(arg brake_limit)" />
+  </node>
+
+</launch>
